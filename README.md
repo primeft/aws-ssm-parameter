@@ -18,7 +18,7 @@ Currently this option takes three different inputs/arguments.  Two of them are r
 | `value`       | string | Yes      | SSM Parameter Value                                                                       |
 | `description` | string | Yes      | Parameter to attach to SSM Parameter                                                      |
 | `tier`        | string | No       | (Optional) Parameter Tier. Default Value: `Standard` Valid Values: `Standard`, `Advanced` |
-| `type`        | string | No       | (Optional) Parameter Type. Default Value: `SecureString` Valid Values: `String`, `SecureString` |
+| `type`        | string | No       | (Optional) Parameter Type. Default Value: `SecureString` Valid Values: `String`, `StringList`, `SecureString` |
 
 ### SSM Parameter Naming Constraints
 

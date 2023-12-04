@@ -16,21 +16,11 @@ from botocore.exceptions import ClientError
 
 parser = argparse.ArgumentParser(description="Check for AWS SSM Parameter")
 
-parser.add_argument("--name", metavar="name", type=str, help="AWS SSM Parameter Name")
-parser.add_argument("--value", metavar="value", type=str, help="AWS SSM Parameter Value")
-parser.add_argument(
-    "--description",
-    metavar="description",
-    type=str,
-    help="AWS SSM Parameter Description",
-)
-parser.add_argument(
-    "--tier",
-    metavar="tier",
-    type=str,
-    help="The parameter tier to assign to a parameter.",
-)
-parser.add_argument("--type", metavar="type", type=str, help="AWS SSM Parameter Type")
+parser.add_argument("--name", type=str, help="AWS SSM Parameter Name")
+parser.add_argument("--value", type=str, help="AWS SSM Parameter Value")
+parser.add_argument("--description", type=str, help="AWS SSM Parameter Description")
+parser.add_argument("--tier", type=str, help="The parameter tier to assign to a parameter.")
+parser.add_argument("--type", type=str, help="AWS SSM Parameter Type")
 
 args = parser.parse_args()
 
