@@ -2,23 +2,23 @@
 
 ## Purpose
 
-Often there are times where you have values that are used during runtime or environment specific that that exists on infrastructure.  This actions primary use case is for that.  
+Often there are times where you have values that are used during runtime or environment specific that that exists on infrastructure.  This actions primary use case is for that.
 
 This actions purpose is to create SSM Parameters for you in a Github workflow.  It actually will check to see if the SSM Parameter exists, if it does not exist it will then create a new parameter.  If the parameter already exists, it checks to make sure its the same as the value you specify.  If it is not, it will go ahead and update that value to be what you have specified.
 
-
 ## How To Use This Action
 
-Currently this option takes three different inputs/arguments.  Two of them are required and one is optional.  
+Currently this option takes three different inputs/arguments.  Two of them are required and one is optional.
 
 ### Inputs
+
 | Name          | Type   | Required | Description                                                                               |
 | ------------- | ------ | -------- | ----------------------------------------------------------------------------------------- |
 | `name`        | string | Yes      | SSM Parameter Name                                                                        |
 | `value`       | string | Yes      | SSM Parameter Value                                                                       |
 | `description` | string | Yes      | Parameter to attach to SSM Parameter                                                      |
 | `tier`        | string | No       | (Optional) Parameter Tier. Default Value: `Standard` Valid Values: `Standard`, `Advanced` |
-
+| `type`        | string | No       | (Optional) Parameter Type. Default Value: `SecureString` Valid Values: `String`, `StringList`, `SecureString` |
 
 ### SSM Parameter Naming Constraints
 
@@ -29,11 +29,11 @@ Currently this option takes three different inputs/arguments.  Two of them are r
 * A parameter name can't include spaces.
 * Parameter hierarchies are limited to a maximum depth of fifteen levels.
 
-### SSM Parameter Tiers 
-Parameter Store includes standard parameters and advanced parameters. You individually configure parameters to use either the standard-parameter tier (the default tier) or the advanced-parameter tier. 
+### SSM Parameter Tiers
+
+Parameter Store includes standard parameters and advanced parameters. You individually configure parameters to use either the standard-parameter tier (the default tier) or the advanced-parameter tier.
 
 [Check out the AWS documentation](https://docs.aws.amazon.com/systems-manager/latest/userguide/parameter-store-advanced-parameters.html) about the differences between the two different tiers.
-
 
 ## Examples
 
@@ -48,9 +48,10 @@ As as emample, suppose you want to create a SSM Parameter in Parameter Store but
       description: Super Secret - Do Not Tell Anyone
 ```
 
-The action does not require you to specify a `tier` when using the action.  If you do not specify one, it will default your parameter to be an `Standard` type parameter.  
+The action does not require you to specify a `tier` when using the action.  If you do not specify one, it will default your parameter to be an `Standard` type parameter.
 
 If that does not work for you, you can also specify `Standard` or `Advanced`.  Check out the [AWS documentation on tiers](https://docs.aws.amazon.com/systems-manager/latest/userguide/parameter-store-advanced-parameters.html#ps-default-tier) for more details if you want more information on selecting a tier.  See example below.
+
 ```yaml
 - name: Awesome Client Secret - SSM Parameter
   uses: stephenbawks/aws-ssm-parameter@v1.0.0

@@ -19,14 +19,18 @@ inputs:
     description: AWS SSM Parameter Tier
     required: false
     default: Standard
+  type:
+    description: AWS SSM Parameter Type
+    required: false
+    default: SecureString
 
 runs:
-  using: 'composite'
+  using: "composite"
   steps:
     - run: echo "--- Checking AWS SSM Parameters ---"
       shell: bash
     - run: pip3 install boto3
       shell: bash
     - id: ssm-parameters
-      run: ${{ github.action_path }}/ssm-parameter.py --name "${{ inputs.name }}" --value "${{ inputs.value }}" --description "${{ inputs.description }}" --tier "${{ inputs.tier }}"
+      run: ${{ github.action_path }}/ssm-parameter.py --name "${{ inputs.name }}" --value "${{ inputs.value }}" --description "${{ inputs.description }}" --tier "${{ inputs.tier }}" --type "${{ inputs.type }}"
       shell: bash
