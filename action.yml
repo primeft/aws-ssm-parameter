@@ -29,7 +29,7 @@ runs:
   steps:
     - run: echo "--- Checking AWS SSM Parameters ---"
       shell: bash
-    - run: pip3 install boto3
+    - run: pipx install boto3
       shell: bash
     - id: ssm-parameters
       run: ${{ github.action_path }}/ssm-parameter.py --name "${{ inputs.name }}" --value "${{ inputs.value }}" --description "${{ inputs.description }}" --tier "${{ inputs.tier }}" --type "${{ inputs.type }}"
