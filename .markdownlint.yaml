@@ -1,8 +1,0 @@
----
-no-inline-html:
-  allowed_elements:
-    - "a"
-line-length: false
-first-line-heading: false
-no-duplicate-heading:
-  siblings_only: true

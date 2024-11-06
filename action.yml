@@ -27,14 +27,45 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - run: echo "--- Checking AWS SSM Parameters ---"
-      shell: bash
-    - uses: actions/setup-python@v5
+    - name: Set up Python
+      uses: actions/setup-python@v5
       with:
         python-version: "3.12"
         cache: pip
-    - run: pip install boto3
+
+    - name: Create requirements.txt if it doesn't exist
+      # Create an empty requirements.txt if this file (or pyproject.toml) doesn't exist.
+      # This works around an issue with setup-python for non-Python projects, which ends up
+      # with this error:
+      #
+      #   Run actions/setup-python@v5.0.0
+      #     with:
+      #       python-version: 3.12
+      #       cache: pip
+      #   Installed versions
+      #     Successfully set up CPython (3.12.1)
+      #   Error: No file in /home/runner/work/foo/foo matched to
+      #   [**/requirements.txt or **/pyproject.toml], make sure you have checked out the target repository
+      #
+      # This has been reported at: https://github.com/actions/setup-python/issues/807
+      # In the future this might be addressed by either:
+      # https://github.com/actions/setup-python/pull/762
+      # https://github.com/actions/setup-python/issues/751
+      if: hashFiles('**/requirements.txt', '**/pyproject.toml') == ''
       shell: bash
-    - id: ssm-parameters
-      run: ${{ github.action_path }}/ssm-parameter.py --name "${{ inputs.name }}" --value "${{ inputs.value }}" --description "${{ inputs.description }}" --tier "${{ inputs.tier }}" --type "${{ inputs.type }}"
+      run: |
+        touch ./requirements.txt
+
+    - name: Install boto3
+      run: pip install boto3
       shell: bash
+
+    - name: Update SSM Parameter if needed
+      shell: bash
+      run: |
+        ${{ github.action_path }}/ssm-parameter.py \
+          --name "${{ inputs.name }}" \
+          --value "${{ inputs.value }}" \
+          --description "${{ inputs.description }}" \
+          --tier "${{ inputs.tier }}" \
+          --type "${{ inputs.type }}"

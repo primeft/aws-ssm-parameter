@@ -1,0 +1,13 @@
+---
+config:
+  no-inline-html:
+    allowed_elements:
+      - "a"
+  line-length: false
+  first-line-heading: false
+  blanks-around-headings: false
+  blanks-around-tables: false
+ignores:
+  - CHANGELOG.md
+gitignore: true
+fix: true
