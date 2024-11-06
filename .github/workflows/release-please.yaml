@@ -1,0 +1,29 @@
+name: Run Release-Please
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  actions: read
+  contents: write
+  id-token: write
+  pull-requests: write
+
+jobs:
+  release-please:
+    name: Run Release-Please
+    runs-on: ubuntu-latest
+    steps:
+      - name: Generate app token
+        id: martha-app-token
+        uses: actions/create-github-app-token@v1
+        with:
+          app-id: ${{ vars.MARTHA_APP_ID }}
+          private-key: ${{ secrets.MARTHA_APP_PRIVATE_KEY }}
+          owner: ${{ github.repository_owner }}
+
+      - uses: googleapis/release-please-action@v4
+        with:
+          token: ${{ steps.martha-app-token.outputs.token }}

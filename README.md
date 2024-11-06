@@ -10,15 +10,18 @@ This actions purpose is to create SSM Parameters for you in a Github workflow.  
 
 Currently this option takes three different inputs/arguments.  Two of them are required and one is optional.
 
-### Inputs
-
-| Name          | Type   | Required | Description                                                                               |
-| ------------- | ------ | -------- | ----------------------------------------------------------------------------------------- |
-| `name`        | string | Yes      | SSM Parameter Name                                                                        |
-| `value`       | string | Yes      | SSM Parameter Value                                                                       |
-| `description` | string | Yes      | Parameter to attach to SSM Parameter                                                      |
-| `tier`        | string | No       | (Optional) Parameter Tier. Default Value: `Standard` Valid Values: `Standard`, `Advanced` |
-| `type`        | string | No       | (Optional) Parameter Type. Default Value: `SecureString` Valid Values: `String`, `StringList`, `SecureString` |
+<!--doc_begin-->
+## Inputs
+|Input|Description|Default|Required|
+|-----|-----------|-------|:------:|
+|`name`|AWS SSM Parameter Name|n/a|yes|
+|`value`|AWS SSM Parameter Value|n/a|yes|
+|`description`|AWS SSM Parameter Description|n/a|yes|
+|`tier`|AWS SSM Parameter Tier|`Standard`|no|
+|`type`|AWS SSM Parameter Type|`SecureString`|no|
+## Outputs
+None
+<!--doc_end-->
 
 ### SSM Parameter Naming Constraints
 
@@ -39,25 +42,29 @@ Parameter Store includes standard parameters and advanced parameters. You indivi
 
 As as emample, suppose you want to create a SSM Parameter in Parameter Store but you do not want to actually expose that secret in your workflow.  This is where you would be creating a Github Secret where you are storing that value and then using the Github secrets context to have that injected during runtime. In the example below, `description` is optional and not required but is recommended.
 
+<!-- x-release-please-start-version -->
 ```yaml
 - name: Awesome Client Secret - SSM Parameter
-  uses: stephenbawks/aws-ssm-parameter@v1.0.0
+  uses: primeft/aws-ssm-parameter@v1.0.0
   with:
       name: /awesome/clientSecret
       value: ${{ secrets.AWESOME_CLIENT_SECRET }}
       description: Super Secret - Do Not Tell Anyone
 ```
+<!-- x-release-please-end -->
 
 The action does not require you to specify a `tier` when using the action.  If you do not specify one, it will default your parameter to be an `Standard` type parameter.
 
 If that does not work for you, you can also specify `Standard` or `Advanced`.  Check out the [AWS documentation on tiers](https://docs.aws.amazon.com/systems-manager/latest/userguide/parameter-store-advanced-parameters.html#ps-default-tier) for more details if you want more information on selecting a tier.  See example below.
 
+<!-- x-release-please-start-version -->
 ```yaml
 - name: Awesome Client Secret - SSM Parameter
-  uses: stephenbawks/aws-ssm-parameter@v1.0.0
+  uses: primeft/aws-ssm-parameter@v1.0.0
   with:
       name: /awesome/clientSecret
       value: ${{ secrets.AWESOME_CLIENT_SECRET }}
       description: Super Secret - Do Not Tell Anyone
       tier: Advanced
 ```
+<!-- x-release-please-end -->
