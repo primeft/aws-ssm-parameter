@@ -27,12 +27,6 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - name: Set up Python
-      uses: actions/setup-python@v5
-      with:
-        python-version: "3.12"
-        cache: pip
-
     - name: Create requirements.txt if it doesn't exist
       # Create an empty requirements.txt if this file (or pyproject.toml) doesn't exist.
       # This works around an issue with setup-python for non-Python projects, which ends up
@@ -55,6 +49,12 @@ runs:
       shell: bash
       run: |
         touch ./requirements.txt
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: "3.12"
+        cache: pip
 
     - name: Install boto3
       run: pip install boto3
