@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.1.2](https://github.com/primeft/aws-ssm-parameter/compare/v2.1.1...v2.1.2) (2025-02-12)
+
+
+### Chores
+
+* **tooling:** Update pre-commit hooks ([#10](https://github.com/primeft/aws-ssm-parameter/issues/10)) ([15ab409](https://github.com/primeft/aws-ssm-parameter/commit/15ab4093b7e8062b9b63c6aee01af3fcd39e575b))
+
 ## [2.1.1](https://github.com/primeft/aws-ssm-parameter/compare/v2.1.0...v2.1.1) (2024-11-06)
 
 
