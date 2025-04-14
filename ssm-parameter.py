@@ -122,7 +122,7 @@ def put_ssm_parameter(
     parameter_description: str = "",
     parameter_value: str | None = None,
     parameter_tier: str = "Standard",
-    parameter_type: str = "SecureString",
+    parameter_type: str = "String",
     file_path: str | None = None,
 ) -> bool:
     """
