@@ -15,10 +15,11 @@ Currently this option takes three different inputs/arguments.  Two of them are r
 |Input|Description|Default|Required|
 |-----|-----------|-------|:------:|
 |`name`|AWS SSM Parameter Name|n/a|yes|
-|`value`|AWS SSM Parameter Value|n/a|yes|
 |`description`|AWS SSM Parameter Description|n/a|yes|
+|`value`|AWS SSM Parameter Value|n/a|no|
 |`tier`|AWS SSM Parameter Tier|`Standard`|no|
 |`type`|AWS SSM Parameter Type|`String`|no|
+|`file-path`|File to read the value from|n/a|no|
 ## Outputs
 None
 <!--doc_end-->
