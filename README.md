@@ -18,7 +18,7 @@ Currently this option takes three different inputs/arguments.  Two of them are r
 |`value`|AWS SSM Parameter Value|n/a|yes|
 |`description`|AWS SSM Parameter Description|n/a|yes|
 |`tier`|AWS SSM Parameter Tier|`Standard`|no|
-|`type`|AWS SSM Parameter Type|`SecureString`|no|
+|`type`|AWS SSM Parameter Type|`String`|no|
 ## Outputs
 None
 <!--doc_end-->
