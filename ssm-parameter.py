@@ -27,6 +27,42 @@ parser.add_argument("--file-path", type=str, default=None, help="File to read th
 args = parser.parse_args()
 
 
+def get_parameter_value(parameter_value: str | None, file_path: str | None) -> str:
+    """
+    Get parameter value from either the provided value or a file.
+
+    Parameters:
+        parameter_value (str): The parameter value.
+        file_path (str): The file path to read the value from.
+
+    Returns:
+        str: The parameter value.
+    """
+
+    if parameter_value is None and file_path is None:
+        print("Either parameter_value or file_path must be provided")
+        sys.exit(1)
+
+    if parameter_value is not None and file_path is not None:
+        print("Warning: Both parameter_value and file_path are provided, file_path will be prioritized")
+
+    try:
+        if file_path:
+            with open(file_path, "r") as file:
+                parameter_value = file.read()
+        else:
+            parameter_value = args.value
+    except FileNotFoundError:
+        print(f"File not found: {file_path}")
+        sys.exit(1)
+
+    if parameter_value is None or parameter_value == "":
+        print("Parameter value or provided file path cannot be empty")
+        sys.exit(1)
+
+    return parameter_value
+
+
 def check_value_ssm_parameter(
     parameter_name: str,
     parameter_description: str,
@@ -54,26 +90,7 @@ def check_value_ssm_parameter(
         True or False (bool): [Value of the SSM parameter for the client token]
     """
 
-    if parameter_value is None and file_path is None:
-        print("Either parameter_value or file_path must be provided")
-        sys.exit(1)
-
-    if parameter_value is not None and file_path is not None:
-        print("Warning: Both parameter_value and file_path are provided, file_path will be prioritized")
-
-    try:
-        if file_path:
-            with open(file_path, "r") as file:
-                parameter_value = file.read()
-        else:
-            parameter_value = args.value
-    except FileNotFoundError:
-        print(f"File not found: {file_path}")
-        sys.exit(1)
-
-    if parameter_value is None or parameter_value == "":
-        print("Parameter value or provided file path cannot be empty")
-        sys.exit(1)
+    parameter_value = get_parameter_value(parameter_value, file_path)
 
     ssm = boto3.client("ssm")
 
@@ -143,26 +160,7 @@ def put_ssm_parameter(
         True or False (bool): [Value of the SSM parameter for the client token]
     """
 
-    if parameter_value is None and file_path is None:
-        print("Either parameter_value or file_path must be provided")
-        sys.exit(1)
-
-    if parameter_value is not None and file_path is not None:
-        print("Warning: Both parameter_value and file_path are provided, file_path will be prioritized")
-
-    try:
-        if file_path:
-            with open(file_path, "r") as file:
-                parameter_value = file.read()
-        else:
-            parameter_value = args.value
-    except FileNotFoundError:
-        print(f"File not found: {file_path}")
-        sys.exit(1)
-
-    if parameter_value is None or parameter_value == "":
-        print("Parameter value or provided file path cannot be empty")
-        sys.exit(1)
+    parameter_value = get_parameter_value(parameter_value, file_path)
 
     ssm = boto3.client("ssm")
 

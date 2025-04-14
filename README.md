@@ -51,6 +51,7 @@ As as emample, suppose you want to create a SSM Parameter in Parameter Store but
       name: /awesome/clientSecret
       value: ${{ secrets.AWESOME_CLIENT_SECRET }}
       description: Super Secret - Do Not Tell Anyone
+      type: SecureString
 ```
 <!-- x-release-please-end -->
 
@@ -67,5 +68,19 @@ If that does not work for you, you can also specify `Standard` or `Advanced`.  C
       value: ${{ secrets.AWESOME_CLIENT_SECRET }}
       description: Super Secret - Do Not Tell Anyone
       tier: Advanced
+      type: SecureString
+```
+<!-- x-release-please-end -->
+
+If you want to read the value from a file, you can do so by specifying the `file-path` input.  This will read the value from the file and use that as the value for the SSM Parameter.  See example below.
+
+<!-- x-release-please-start-version -->
+```yaml
+- name: Awesome Parameter from File - SSM Parameter
+  uses: primeft/aws-ssm-parameter@v1.0.0
+  with:
+      name: /awesome/parameter
+      file-path: ./foo/bar.txt
+      description: This is a test parameter
 ```
 <!-- x-release-please-end -->
