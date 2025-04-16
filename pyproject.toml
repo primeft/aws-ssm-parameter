@@ -1,3 +1,19 @@
+[project]
+description = "AWS SSM Parameter Update Utility"
+dependencies = ["boto3>=1.34.136"]
+name = "aws-ssm-parameter"
+readme = "README.md"
+requires-python = ">=3.10"
+classifiers = [
+  "Development Status :: 5 - Production/Stable",
+  "Private :: Internal PrimeFT Use Only",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+]
+dynamic = ["version"]
+
 [tool.black]
 line-length = 120
 include = '\.pyi?$'

@@ -9,12 +9,12 @@ inputs:
   name:
     description: AWS SSM Parameter Name
     required: true
-  value:
-    description: AWS SSM Parameter Value
-    required: true
   description:
     description: AWS SSM Parameter Description
     required: true
+  value:
+    description: AWS SSM Parameter Value
+    required: false
   tier:
     description: AWS SSM Parameter Tier
     required: false
@@ -22,50 +22,30 @@ inputs:
   type:
     description: AWS SSM Parameter Type
     required: false
-    default: SecureString
+    default: String
+  file-path:
+    description: File to read the value from
+    required: false
 
 runs:
   using: "composite"
   steps:
-    - name: Create requirements.txt if it doesn't exist
-      # Create an empty requirements.txt if this file (or pyproject.toml) doesn't exist.
-      # This works around an issue with setup-python for non-Python projects, which ends up
-      # with this error:
-      #
-      #   Run actions/setup-python@v5.0.0
-      #     with:
-      #       python-version: 3.12
-      #       cache: pip
-      #   Installed versions
-      #     Successfully set up CPython (3.12.1)
-      #   Error: No file in /home/runner/work/foo/foo matched to
-      #   [**/requirements.txt or **/pyproject.toml], make sure you have checked out the target repository
-      #
-      # This has been reported at: https://github.com/actions/setup-python/issues/807
-      # In the future this might be addressed by either:
-      # https://github.com/actions/setup-python/pull/762
-      # https://github.com/actions/setup-python/issues/751
-      if: hashFiles('**/requirements.txt', '**/pyproject.toml') == ''
-      shell: bash
-      run: |
-        touch ./requirements.txt
+    - name: Install uv
+      uses: astral-sh/setup-uv@v5
 
     - name: Set up Python
       uses: actions/setup-python@v5
       with:
         python-version: "3.12"
-        cache: pip
-
-    - name: Install boto3
-      run: pip install boto3
-      shell: bash
+        python-version-file: "pyproject.toml"
 
     - name: Update SSM Parameter if needed
       shell: bash
       run: |
-        ${{ github.action_path }}/ssm-parameter.py \
+        uv run ${{ github.action_path }}/ssm-parameter.py \
           --name "${{ inputs.name }}" \
           --value "${{ inputs.value }}" \
           --description "${{ inputs.description }}" \
           --tier "${{ inputs.tier }}" \
-          --type "${{ inputs.type }}"
+          --type "${{ inputs.type }}" \
+          --file-path "${{ inputs.file-path }}"
