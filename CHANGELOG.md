@@ -1,5 +1,17 @@
 # Changelog
 
+## [2.2.0](https://github.com/primeft/aws-ssm-parameter/compare/v2.1.3...v2.2.0) (2025-04-24)
+
+
+### Features
+
+* Add the ability to read value from file ([#13](https://github.com/primeft/aws-ssm-parameter/issues/13)) ([8722f55](https://github.com/primeft/aws-ssm-parameter/commit/8722f5503fbeb35138d358a7728405dc4309773e))
+
+
+### Chores
+
+* **tooling:** Update pre-commit hooks ([#15](https://github.com/primeft/aws-ssm-parameter/issues/15)) ([5a3488d](https://github.com/primeft/aws-ssm-parameter/commit/5a3488d89430c609483058b8d53aa42374b86d48))
+
 ## [2.1.3](https://github.com/primeft/aws-ssm-parameter/compare/v2.1.2...v2.1.3) (2025-04-14)
 
 
