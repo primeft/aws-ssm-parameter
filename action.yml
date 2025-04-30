@@ -31,18 +31,12 @@ runs:
   using: "composite"
   steps:
     - name: Install uv
-      uses: astral-sh/setup-uv@v5
-
-    - name: Set up Python
-      uses: actions/setup-python@v5
-      with:
-        python-version: "3.12"
-        python-version-file: "pyproject.toml"
+      uses: astral-sh/setup-uv@v6
 
     - name: Update SSM Parameter if needed
       shell: bash
       run: |
-        uv run ${{ github.action_path }}/ssm-parameter.py \
+        uv run --no-project ${{ github.action_path }}/ssm-parameter.py \
           --name "${{ inputs.name }}" \
           --value "${{ inputs.value }}" \
           --description "${{ inputs.description }}" \
