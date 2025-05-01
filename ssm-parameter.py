@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
+# /// script
+# requires-python = ">=3.12"
+# dependencies = [
+#     "boto3>=1.34.136",
+# ]
+# ///
 
 import argparse
 import sys
@@ -39,11 +45,14 @@ def get_parameter_value(parameter_value: str | None, file_path: str | None) -> s
         str: The parameter value.
     """
 
-    if parameter_value is None and file_path is None:
+    if file_path is not None:
+        file_path = file_path.strip()
+
+    if parameter_value is None and not file_path:
         print("Either parameter_value or file_path must be provided")
         sys.exit(1)
 
-    if parameter_value is not None and file_path is not None:
+    if parameter_value is not None and file_path:
         print("Warning: Both parameter_value and file_path are provided, file_path will be prioritized")
 
     try:
@@ -97,8 +106,8 @@ def check_value_ssm_parameter(
     try:
         response = ssm.get_parameter(Name=parameter_name, WithDecryption=True)
         value = response["Parameter"]["Value"]
-        print("Parameter Exists, checking parameter details....")
-        print(f" - Parameter Value: {parameter_name}")
+        print("Parameter exists, checking parameter details....")
+        print(f" - Parameter value: {parameter_value}")
 
         response = ssm.describe_parameters(
             ParameterFilters=[
@@ -120,7 +129,7 @@ def check_value_ssm_parameter(
         if remote_type != parameter_type:
             raise ValueError(f"Cannot change parameter type from {remote_type} to {parameter_type}")
         elif value == parameter_value and description == parameter_description and tier == parameter_tier:
-            print(" - Verified parameter details are current.")
+            print(" - Parameter details are up to date.")
             return True
         else:
             print(" - Parameter details need to be updated.")
