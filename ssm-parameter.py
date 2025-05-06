@@ -4,6 +4,9 @@
 # dependencies = [
 #     "boto3>=1.34.136",
 # ]
+#
+# [[tool.uv.index]]
+# url = "https://pypi.org/simple"
 # ///
 
 import argparse
@@ -48,11 +51,14 @@ def get_parameter_value(parameter_value: str | None, file_path: str | None) -> s
     if file_path is not None:
         file_path = file_path.strip()
 
-    if parameter_value is None and not file_path:
-        print("Either parameter_value or file_path must be provided")
+    if parameter_value is not None:
+        parameter_value = parameter_value.strip()
+
+    if not parameter_value and not file_path:
+        print("Error: Either parameter_value or file_path must be provided")
         sys.exit(1)
 
-    if parameter_value is not None and file_path:
+    if parameter_value and file_path:
         print("Warning: Both parameter_value and file_path are provided, file_path will be prioritized")
 
     try:
@@ -62,11 +68,11 @@ def get_parameter_value(parameter_value: str | None, file_path: str | None) -> s
         else:
             parameter_value = args.value
     except FileNotFoundError:
-        print(f"File not found: {file_path}")
+        print(f"Error: File not found: {file_path}")
         sys.exit(1)
 
     if parameter_value is None or parameter_value == "":
-        print("Parameter value or provided file path cannot be empty")
+        print("Error: Both parameter_value and file_path cannot be empty")
         sys.exit(1)
 
     return parameter_value

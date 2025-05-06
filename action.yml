@@ -36,7 +36,7 @@ runs:
     - name: Update SSM Parameter if needed
       shell: bash
       run: |
-        uv run --no-project ${{ github.action_path }}/ssm-parameter.py \
+        uv run --script ${{ github.action_path }}/ssm-parameter.py \
           --name "${{ inputs.name }}" \
           --value "${{ inputs.value }}" \
           --description "${{ inputs.description }}" \
