@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.2.2](https://github.com/primeft/aws-ssm-parameter/compare/v2.2.1...v2.2.2) (2025-05-06)
+
+
+### Bug Fixes
+
+* Use uv script isolation ([#19](https://github.com/primeft/aws-ssm-parameter/issues/19)) ([6c16788](https://github.com/primeft/aws-ssm-parameter/commit/6c167888d3c1b614bd919cfaf444781287200494))
+
 ## [2.2.1](https://github.com/primeft/aws-ssm-parameter/compare/v2.2.0...v2.2.1) (2025-05-01)
 
 
