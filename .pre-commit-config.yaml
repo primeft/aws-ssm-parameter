@@ -59,7 +59,7 @@ repos:
         name: run isort
 
   - repo: https://github.com/DavidAnson/markdownlint-cli2
-    rev: v0.17.2
+    rev: v0.18.0
     hooks:
       - id: markdownlint-cli2
         name: lint markdown files
