@@ -29,7 +29,7 @@ repos:
       - id: requirements-txt-fixer
 
   - repo: https://github.com/pre-commit/mirrors-mypy
-    rev: v1.15.0
+    rev: v1.16.0
     hooks:
       - id: mypy
         name: run mypy
@@ -59,7 +59,7 @@ repos:
         name: run isort
 
   - repo: https://github.com/DavidAnson/markdownlint-cli2
-    rev: v0.17.2
+    rev: v0.18.1
     hooks:
       - id: markdownlint-cli2
         name: lint markdown files
